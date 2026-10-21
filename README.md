@@ -54,3 +54,65 @@ Join our community of developers creating universal apps.
 
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+
+## Testes automatizados
+
+### Instalar dependências
+
+```bash
+npm install
+```
+
+### Executar os testes
+
+```bash
+npm test
+```
+
+### Gerar o relatório de cobertura
+
+```bash
+npm run test:coverage
+```
+
+O relatório em HTML é gerado em `coverage/lcov-report/index.html` (pasta ignorada pelo
+git). Um resumo em texto da última execução está disponível em
+[`coverage-summary.txt`](./coverage-summary.txt).
+
+### O que foi testado
+
+- **Funções puras / regras de negócio** (`src/utils/__tests__/formatters.test.ts`):
+  `formatPrice` e `formatChange`, cobrindo casos de sucesso, limites (zero, negativo)
+  e arredondamento.
+- **Componentes visuais** (`src/components/CryptoCard/__tests__` e
+  `src/components/AlertCard/__tests__`): renderização de textos, formatação de preço,
+  exibição condicional do badge de alertas, interação de expandir/colapsar e o botão
+  de exclusão de alerta.
+- **Hook** (`src/context/AlertProvider/__tests__/useAlertProvider.test.tsx`): estado
+  inicial, hidratação assíncrona a partir do `AsyncStorage` (mockado), criação e
+  remoção de alertas, e persistência no armazenamento local.
+- **Fluxo completo** (`src/screens/CreateAlertScreen/__tests__/CreateAlertFlow.test.tsx`):
+  renderiza `CreateAlertScreen` e `PriceAlertsScreen` sob o mesmo `AlertProvider` real,
+  simula a seleção de criptomoeda, preenchimento do preço-alvo, escolha da condição e
+  envio do formulário, validando que o alerta aparece na listagem. O `expo-router` é
+  mockado por ser um limite externo de navegação.
+
+Mocks usados apenas nos limites externos: `@react-native-async-storage/async-storage`
+(biblioteca nativa de armazenamento) e `expo-router` (navegação). Hooks, componentes e
+regras de negócio envolvidos permanecem reais nos testes.
+
+### Resultado da cobertura (última execução)
+
+```
+All files                      |   59.14 |    51.57 |   63.33 |   59.62
+ components/AlertCard          |     100 |      100 |     100 |     100
+ components/ConditionOptionRow |     100 |      100 |     100 |     100
+ components/CryptoCard         |   93.75 |    76.19 |     100 |     100
+ context/AlertProvider         |   97.22 |       80 |   93.33 |   96.77
+ screens/CreateAlertScreen     |   81.81 |       65 |    87.5 |    86.2
+ screens/PriceAlertsScreen     |    87.5 |      100 |      80 |    87.5
+ utils                         |     100 |      100 |     100 |     100
+```
+
+Cobertura total de statements: **59.14%**, acima do mínimo de 50% exigido pela
+atividade. Ver [`coverage-summary.txt`](./coverage-summary.txt) para o relatório completo.
