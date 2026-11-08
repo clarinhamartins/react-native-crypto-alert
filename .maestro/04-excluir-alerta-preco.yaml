@@ -26,11 +26,9 @@ tags:
       - tapOn: "Save Alert"
       - assertVisible: "Price Alerts"
 
-# Localiza e aciona o botao de exclusao acessivel
-- assertVisible:
-    accessibilityLabel: "Delete alert"
-- tapOn:
-    accessibilityLabel: "Delete alert"
+# Localiza e aciona o botao de exclusao do alerta (seleciona pelo label de acessibilidade)
+- assertVisible: "Delete alert"
+- tapOn: "Delete alert"
 
 # Valida que o alerta foi excluido e o estado de lista vazia foi restaurado
 - assertVisible: "No alerts yet"

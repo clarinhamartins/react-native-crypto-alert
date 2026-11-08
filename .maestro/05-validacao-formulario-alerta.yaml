@@ -27,7 +27,6 @@ tags:
 # Permanece na mesma tela pois a criptomoeda e campo obrigatorio
 - assertVisible: "Create Alert"
 
-# Retorna para a tela anterior pelo botao de voltar acessivel
-- tapOn:
-    accessibilityLabel: "Go back"
+# Retorna para a tela anterior pelo botao de voltar
+- tapOn: "Go back"
 - assertVisible: "Price Alerts"
