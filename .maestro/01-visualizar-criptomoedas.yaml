@@ -1,0 +1,25 @@
+appId: ${APP_ID:-com.rocketseat.cryptoalert}
+name: "E2E-01: Visualizar Listagem de Criptomoedas"
+tags:
+  - listagem
+  - smoke
+---
+# Inicia o aplicativo mantendo o estado
+- launchApp:
+    clearState: false
+
+# Assegura que o titulo principal da tela esta visivel
+- assertVisible: "Cryptocurrencies"
+
+# Valida a exibicao dos principais ativos com seus simbolos na tela inicial
+- assertVisible: "Bitcoin"
+- assertVisible: "BTC"
+- assertVisible: "Ethereum"
+- assertVisible: "ETH"
+
+# Realiza rolagem vertical para verificar outros ativos renderizados na FlatList
+- scroll
+- assertVisible: "Solana"
+- assertVisible: "SOL"
+- assertVisible: "Cardano"
+- assertVisible: "ADA"

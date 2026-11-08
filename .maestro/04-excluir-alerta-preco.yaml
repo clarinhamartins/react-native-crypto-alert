@@ -1,0 +1,38 @@
+appId: ${APP_ID:-com.rocketseat.cryptoalert}
+name: "E2E-04: Exclusao de Alerta de Preco"
+tags:
+  - alertas
+  - exclusao
+---
+- launchApp:
+    clearState: false
+
+# Navega para a aba de alertas
+- tapOn: "Alerts"
+- assertVisible: "Price Alerts"
+
+# Garante a existencia de um alerta na tela (se estiver vazio, cria um para manter o teste idempotente)
+- runFlow:
+    when:
+      visible: "No alerts yet"
+    commands:
+      - tapOn: "Create Alert"
+      - tapOn: "Select cryptocurrency"
+      - tapOn: "Bitcoin"
+      - tapOn:
+          text: "0.00"
+      - inputText: "95000"
+      - hideKeyboard
+      - tapOn: "Save Alert"
+      - assertVisible: "Price Alerts"
+
+# Localiza e aciona o botao de exclusao acessivel
+- assertVisible:
+    accessibilityLabel: "Delete alert"
+- tapOn:
+    accessibilityLabel: "Delete alert"
+
+# Valida que o alerta foi excluido e o estado de lista vazia foi restaurado
+- assertVisible: "No alerts yet"
+- assertVisible: "Create your first price alert to get notified when a cryptocurrency reaches your target price."
+- assertVisible: "Create Alert"

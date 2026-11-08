@@ -1,0 +1,33 @@
+appId: ${APP_ID:-com.rocketseat.cryptoalert}
+name: "E2E-02: Conversao de Criptomoeda para Moeda Fiduciaria"
+tags:
+  - conversao
+  - calculo
+---
+- launchApp:
+    clearState: false
+
+# Navega para a aba de conversao
+- tapOn: "Convert"
+- assertVisible: "Convert Crypto"
+
+# Valida estado inicial do conversor
+- assertVisible: "Amount"
+- assertVisible: "Enter an amount"
+
+# Toca no campo de montante e digita 2 unidades
+- tapOn:
+    text: "0.00"
+- inputText: "2"
+- hideKeyboard
+
+# Abre o modal de selecao de criptomoeda
+- tapOn: "Cryptocurrency"
+- assertVisible: "Ethereum"
+- tapOn: "Ethereum"
+
+# Valida que o calculo dinamico foi realizado e exibido na caixa de resultado
+- assertNotVisible: "Enter an amount"
+- assertVisible: "Converted Amount"
+- assertVisible:
+    text: ".*\\$.*"

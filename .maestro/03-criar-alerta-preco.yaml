@@ -1,0 +1,43 @@
+appId: ${APP_ID:-com.rocketseat.cryptoalert}
+name: "E2E-03: Criacao de Novo Alerta de Preco"
+tags:
+  - alertas
+  - criacao
+---
+- launchApp:
+    clearState: false
+
+# Navega para a aba de alertas
+- tapOn: "Alerts"
+- assertVisible: "Price Alerts"
+
+# Toca no botao de criacao de alerta (trata 'New Alert' no cabecalho ou 'Create Alert' no Empty State)
+- tapOn:
+    text: "(New Alert|Create Alert)"
+
+# Valida presenca do cabecalho da tela de cadastro
+- assertVisible: "Create Alert"
+
+# Abre o modal de selecao de criptomoeda e escolhe Bitcoin
+- tapOn: "Select cryptocurrency"
+- assertVisible: "Bitcoin"
+- tapOn: "Bitcoin"
+
+# Insere o preco alvo no input numerico
+- tapOn:
+    text: "0.00"
+- inputText: "95000"
+- hideKeyboard
+
+# Seleciona a condicao de alerta (Above target price)
+- tapOn: "Above target price"
+
+# Salva o alerta
+- tapOn: "Save Alert"
+
+# Valida redirecionamento para a lista e exibicao do card com os dados cadastrados
+- assertVisible: "Price Alerts"
+- assertVisible: "Bitcoin"
+- assertVisible: "above"
+- assertVisible:
+    text: ".*95,000\\.00.*"
