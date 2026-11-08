@@ -144,6 +144,80 @@ src/
 └── utils/                # formatadores e funções puras
 ```
 
+## 📱 Testes End-to-End (E2E) com Maestro e IA Generativa
+
+Esta seção documenta a aplicação prática de testes ponta a ponta (E2E) no **Crypto Alert** utilizando o **[Maestro](https://maestro.mobile.dev/)** em conjunto com abordagens de **IA Generativa**, com base no artigo *GenIA-E2ETest: A Generative AI-Based Approach for End-to-End Test Automation* ([arXiv:2510.01024](https://arxiv.org/abs/2510.01024)).
+
+### Documentação da Atividade
+- 📖 [**`reflexao.md`**](./reflexao.md) — Análise e respostas conceituais sobre o artigo GenIA-E2ETest, limitações, riscos da IA e revisão humana.
+- 🤖 [**`ia/planejamento.md`**](./ia/planejamento.md) — Engenharia de prompt, resposta original da IA, cenários selecionados e análise crítica de correções de seletores e oráculos.
+- 📁 [**`.maestro/`**](./.maestro/) — Pasta contendo os fluxos E2E automatizados declarativos em YAML.
+
+---
+
+### Fluxos E2E Implementados
+
+| Fluxo | Arquivo | O que é testado |
+|---|---|---|
+| **E2E-01** | [`.maestro/01-visualizar-criptomoedas.yaml`](./.maestro/01-visualizar-criptomoedas.yaml) | Renderização inicial da lista de criptomoedas, verificação de moedas principais (Bitcoin, Ethereum) e rolagem fluida. |
+| **E2E-02** | [`.maestro/02-conversao-criptomoeda.yaml`](./.maestro/02-conversao-criptomoeda.yaml) | Aba Convert, digitação de montante com fechamento de teclado, seleção de moeda em modal e cálculo em tempo real. |
+| **E2E-03** | [`.maestro/03-criar-alerta-preco.yaml`](./.maestro/03-criar-alerta-preco.yaml) | Criação de alerta de alta para Bitcoin ($95,000.00), validação da modal, persistência e exibição do card na lista. |
+| **E2E-04** | [`.maestro/04-excluir-alerta-preco.yaml`](./.maestro/04-excluir-alerta-preco.yaml) | Exclusão do alerta de preço via botão acessível de lixeira e validação da restauração do Empty State. |
+| **E2E-05 (Extra)** | [`.maestro/05-validacao-formulario-alerta.yaml`](./.maestro/05-validacao-formulario-alerta.yaml) | Validação de obrigatoriedade de campos e botão salvar inativo até preenchimento correto. |
+
+---
+
+### Como Instalar o Maestro e Executar os Testes E2E
+
+#### 1. Instalação do Maestro
+- **Windows (PowerShell):**
+  ```powershell
+  powershell -ExecutionPolicy ByPass -c "irm https://get.maestro.mobile.dev | iex"
+  ```
+  *Certifique-se de adicionar `%USERPROFILE%\.maestro\bin` ao `PATH` do sistema.*
+
+- **macOS / Linux:**
+  ```bash
+  curl -fsSL "https://get.maestro.mobile.dev" | bash
+  ```
+
+#### 2. Preparar e Instalar o Aplicativo no Emulador/Simulador
+Abra seu emulador Android (via Android Studio) ou simulador iOS e instale o aplicativo nativo:
+
+```bash
+# Para gerar a versão de desenvolvimento nativa no Android:
+npx expo run:android
+
+# Para gerar a versão nativa no simulador iOS (macOS):
+npx expo run:ios
+```
+
+> **Alternativa com Expo Go:** caso utilize o Expo Go no dispositivo/emulador, informe o identificador correspondente através da variável `APP_ID=host.exp.exponent`.
+
+#### 3. Execução dos Testes Maestro
+Com o dispositivo/emulador conectado e o app instalado:
+
+```bash
+# Executar todos os fluxos da pasta .maestro:
+maestro test .maestro/
+
+# Executar um fluxo específico:
+maestro test .maestro/01-visualizar-criptomoedas.yaml
+maestro test .maestro/02-conversao-criptomoeda.yaml
+maestro test .maestro/03-criar-alerta-preco.yaml
+maestro test .maestro/04-excluir-alerta-preco.yaml
+```
+
+#### 4. Gravação de Vídeo de Demonstração
+Para gravar a execução de um fluxo para entrega ou auditoria:
+
+```bash
+maestro record .maestro/03-criar-alerta-preco.yaml
+```
+O arquivo `.mp4` resultante conterá a interação completa na tela do dispositivo.
+
+---
+
 ## 🛠 Outros comandos úteis
 
 - `npx expo lint` — roda o ESLint.
