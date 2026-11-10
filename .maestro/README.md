@@ -29,24 +29,24 @@ Este diretório contém os fluxos de teste End-to-End (E2E) desenvolvidos para v
      curl -fsSL "https://get.maestro.mobile.dev" | bash
      ```
 
-### Execução de Todos os Fluxos
-Para rodar toda a suíte de testes E2E sequencialmente:
+### Execução no Expo Go (Android)
+Para executar toda a suíte de testes diretamente no Expo Go:
 ```bash
-maestro test .maestro/
+npm run test:e2e:go
 ```
-
-### Execução de um Fluxo Individual
-```bash
-maestro test .maestro/01-visualizar-criptomoedas.yaml
-maestro test .maestro/02-conversao-criptomoeda.yaml
-maestro test .maestro/03-criar-alerta-preco.yaml
-maestro test .maestro/04-excluir-alerta-preco.yaml
-```
-
-### Executando com AppId Customizado (ex: Expo Go)
-Caso esteja executando via Expo Go em vez do APK nativo:
+Ou individualmente:
 ```bash
 maestro test -e APP_ID=host.exp.exponent .maestro/01-visualizar-criptomoedas.yaml
+maestro test -e APP_ID=host.exp.exponent .maestro/02-conversao-criptomoeda.yaml
+maestro test -e APP_ID=host.exp.exponent .maestro/03-criar-alerta-preco.yaml
+maestro test -e APP_ID=host.exp.exponent .maestro/04-excluir-alerta-preco.yaml
+```
+
+### Execução no App Nativo (Development Build)
+```bash
+npm run test:e2e
+# ou fluxo individual:
+maestro test .maestro/01-visualizar-criptomoedas.yaml
 ```
 
 ---
@@ -55,10 +55,11 @@ maestro test -e APP_ID=host.exp.exponent .maestro/01-visualizar-criptomoedas.yam
 
 O Maestro possui suporte integrado para gravação de tela durante a execução dos testes:
 
-### Gravação de Vídeo (.mp4)
+### Gravação de Vídeo (.mp4) com Expo Go
 Para gerar uma gravação em vídeo de um fluxo em execução:
 ```bash
-maestro record .maestro/03-criar-alerta-preco.yaml
+maestro -e APP_ID=host.exp.exponent record .maestro/03-criar-alerta-preco.yaml
+maestro -e APP_ID=host.exp.exponent record .maestro/02-conversao-criptomoeda.yaml
 ```
 O arquivo de vídeo (`.mp4`) será salvo no diretório corrente, pronto para ser anexado à entrega ou documentação.
 

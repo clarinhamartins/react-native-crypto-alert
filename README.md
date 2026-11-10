@@ -116,18 +116,18 @@ após rodar `npm run test:coverage`.
    base em [`.env.example`](./.env.example). A chave pode ser obtida em
    [coingecko.com](https://www.coingecko.com/).
 
-3. Inicie o app:
+3. Inicie o app no **Expo Go**:
 
    ```bash
-   npx expo start
+   npm start
+   # ou com suporte a conexao externa/tunnel:
+   npm run start:tunnel
    ```
 
-No terminal, você verá opções para abrir o app em:
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go)
+No terminal, escaneie o QR Code com o aplicativo **Expo Go** no seu smartphone (Android ou iOS) ou pressione:
+- `a` para abrir no emulador Android conectado.
+- `i` para abrir no simulador iOS.
+- `w` para abrir na versão Web.
 
 O código principal do app fica na pasta **src**, com rotas em `src/app` (file-based
 routing do [expo-router](https://docs.expo.dev/router/introduction)).
@@ -181,37 +181,53 @@ Esta seção documenta a aplicação prática de testes ponta a ponta (E2E) no *
   ```
 
 #### 2. Preparar e Instalar o Aplicativo no Emulador/Simulador
-Abra seu emulador Android (via Android Studio) ou simulador iOS e instale o aplicativo nativo:
+Abra seu emulador Android (via Android Studio), simulador iOS ou dispositivo físico:
 
-```bash
-# Para gerar a versão de desenvolvimento nativa no Android:
-npx expo run:android
+- **Modo Expo Go (Recomendado e mais rápido):**
+  Instale o app **Expo Go** na Google Play Store ou App Store. Em seguida, inicie o servidor com:
+  ```bash
+  npm start
+  ```
+  Abra o app no Expo Go (pressionando `a` para emulador Android ou escaneando o QR Code).
 
-# Para gerar a versão nativa no simulador iOS (macOS):
-npx expo run:ios
-```
+- **Modo Nativo (Development Build):**
+  ```bash
+  # Para gerar a versão de desenvolvimento nativa no Android:
+  npx expo run:android
 
-> **Alternativa com Expo Go:** caso utilize o Expo Go no dispositivo/emulador, informe o identificador correspondente através da variável `APP_ID=host.exp.exponent`.
+  # Para gerar a versão nativa no simulador iOS (macOS):
+  npx expo run:ios
+  ```
 
 #### 3. Execução dos Testes Maestro
-Com o dispositivo/emulador conectado e o app instalado:
 
+- **Se estiver usando Expo Go (Android):**
+  ```bash
+  npm run test:e2e:go
+  ```
+- **Se estiver usando Expo Go (iOS Simulator):**
+  ```bash
+  npm run test:e2e:go:ios
+  ```
+- **Se estiver usando a versão nativa compilada:**
+  ```bash
+  npm run test:e2e
+  ```
+
+Para executar um fluxo individual com Expo Go:
 ```bash
-# Executar todos os fluxos da pasta .maestro:
-maestro test .maestro/
-
-# Executar um fluxo específico:
-maestro test .maestro/01-visualizar-criptomoedas.yaml
-maestro test .maestro/02-conversao-criptomoeda.yaml
-maestro test .maestro/03-criar-alerta-preco.yaml
-maestro test .maestro/04-excluir-alerta-preco.yaml
+maestro test -e APP_ID=host.exp.exponent .maestro/01-visualizar-criptomoedas.yaml
+maestro test -e APP_ID=host.exp.exponent .maestro/02-conversao-criptomoeda.yaml
+maestro test -e APP_ID=host.exp.exponent .maestro/03-criar-alerta-preco.yaml
+maestro test -e APP_ID=host.exp.exponent .maestro/04-excluir-alerta-preco.yaml
 ```
 
 #### 4. Gravação de Vídeo de Demonstração
-Para gravar a execução de um fluxo para entrega ou auditoria:
+Para gravar a execução de um fluxo no Expo Go para entrega:
 
 ```bash
-maestro record .maestro/03-criar-alerta-preco.yaml
+maestro -e APP_ID=host.exp.exponent record .maestro/03-criar-alerta-preco.yaml
+maestro -e APP_ID=host.exp.exponent record .maestro/02-conversao-criptomoeda.yaml
 ```
 O arquivo `.mp4` resultante conterá a interação completa na tela do dispositivo.
 
