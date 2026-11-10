@@ -163,7 +163,6 @@ Esta seção documenta a aplicação prática de testes ponta a ponta (E2E) no *
 | **E2E-02** | [`.maestro/02-conversao-criptomoeda.yaml`](./.maestro/02-conversao-criptomoeda.yaml) | Aba Convert, digitação de montante com fechamento de teclado, seleção de moeda em modal e cálculo em tempo real. |
 | **E2E-03** | [`.maestro/03-criar-alerta-preco.yaml`](./.maestro/03-criar-alerta-preco.yaml) | Criação de alerta de alta para Bitcoin ($95,000.00), validação da modal, persistência e exibição do card na lista. |
 | **E2E-04** | [`.maestro/04-excluir-alerta-preco.yaml`](./.maestro/04-excluir-alerta-preco.yaml) | Exclusão do alerta de preço via botão acessível de lixeira e validação da restauração do Empty State. |
-| **E2E-05 (Extra)** | [`.maestro/05-validacao-formulario-alerta.yaml`](./.maestro/05-validacao-formulario-alerta.yaml) | Validação de obrigatoriedade de campos e botão salvar inativo até preenchimento correto. |
 
 ---
 

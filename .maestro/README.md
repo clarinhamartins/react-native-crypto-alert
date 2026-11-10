@@ -12,7 +12,6 @@ Este diretório contém os fluxos de teste End-to-End (E2E) desenvolvidos para v
 | `02-conversao-criptomoeda.yaml` | E2E-02 | Navegação para aba Convert, inserção de montante, seleção de criptoativo e verificação do cálculo dinâmico. |
 | `03-criar-alerta-preco.yaml` | E2E-03 | Navegação para Alerts, preenchimento do formulário no modal, seleção de condição e validação do card criado. |
 | `04-excluir-alerta-preco.yaml` | E2E-04 | Exclusão de alerta via botão de lixeira acessível e validação da restauração do Empty State. |
-| `05-validacao-formulario-alerta.yaml` | E2E-05 | Validação de obrigatoriedade de campos e comportamento do botão Salvar. |
 
 ---
 
